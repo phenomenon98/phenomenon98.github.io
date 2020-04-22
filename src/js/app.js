@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "value": 60,
         "density": {
           "enable": true,
-          "value_area": 1000
+          "value_area": 500
         }
       },
       "color": {
