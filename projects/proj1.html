@@ -44,11 +44,10 @@ This project aims to solve the fundamental problem of waste segregation using <b
 <h3>Model v2</h3>
 <p>
 I decided to use Transfer Learning as the primary approach for designing our model. Used Resnet50 pretrained on Imagenet as a feature extractor and used Pytorch to retrain the final layer on our dataset. 
-<img src="assets/resnetcm.png",alt="resnet confusion matrix">
 
-<!--
-	add f1 score
---></p>
+</p>
+<img src="assets/resnetcm.png",alt="resnet confusion matrix">
+<p>We can see in the Confusion Matrix that the performance of each category is almost equally good. ’Glass’ and ’Trash’ perform slightly lower than other categories. Accuracy is 95.25% which is quite good.</p>
 <h3>Model Demo Frontend</h3>
 <p>Deployed our model to a simple website (https://recycle.onrender.com) that can be used for demonstration and testing. 
 <!---
@@ -86,7 +85,8 @@ pic of ui
 <p>Running our model on the Raspberry Pi to classify images in real-time was impractical. The Pi would heat up and would take too long to predict the class of an image. Due to computational constraints I had to sacrifice accuracy for speed and created a new model by performing Transfer Learning on MobileNet v2. I then exported this to a Ternsorflow Lite model. This resulted in our model classifying our images almost instantaneously, although accuracy was affected.</p>
 <h3>Model v4</h3>
 <p>I was able to improve model performance on the pi by performing finetuning over NASNetMobile pretrained on imagenet. The dataset was ﬁrst split in ratio of 0.8-0.1-0.1 (train-validation-test). Weights until layer 749 were frozen and the rest were allowed to train. Then I added 3 fully connected layers with a dropout of 0.3. The ﬁrst 2 layers used ReLU activation function and the last layer used Softmax. The optimizer used was ADAM. Early Stopping and ReduceLRonPlateau were used as callbacks to prevent over-ﬁtting and minimize loss respectively. </p>
-
+<img src="assets/nasnetcm.png",alt="nasnet confusion matrix">
+<p>We can see that the performance of ’Paper’ and ’Trash’ is slightly lower than the other 4 categories. The model is comparatively not as good at distinguishing between ’Paper’ and ’Trash’, with 17 ’Trash’ objects being classiﬁed incorrectly as ’Paper’.</p>
 <h3>Dataset Augmentation</h3>
 <p>
 After every classification the image, coresponding label and a timestamp is sent to a Firebase database. This allows us to retrain our model on images taken by our camera in our lighting and background conditions, which should significantly improve our accuracy.</p>
